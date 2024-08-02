@@ -12,7 +12,7 @@ public class UIWelcomeSheetPage: NSObject {
     
     /// Large title displayed on the top.
     @IBInspectable
-    public var title: String = ""
+    public var title = NSAttributedString(string: "")
     
     /// Rows of content inside body.
     @IBOutlet

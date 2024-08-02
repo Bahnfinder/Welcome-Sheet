@@ -17,33 +17,33 @@ struct WelcomeSheetPageView: View {
     @State private var optionalView: AnyView?
     
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: iPhoneDimensions.spacing) {
-                    HStack {
-                        Spacer()
-                        
-                        if #available(iOS 15.0, *) {
-                            Text(page.title)
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .lineSpacing(8)
-                                .multilineTextAlignment(.center)
-                                .padding(.top, iPhoneDimensions.topPadding - (isiPad ? 15 : 0))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .accessibilityHeading(.h1)
-                        } else {
-                            Text(page.title)
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .lineSpacing(8)
-                                .multilineTextAlignment(.center)
-                                .padding(.top, iPhoneDimensions.topPadding - (isiPad ? 15 : 0))
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        
-                        Spacer()
-                    }
+           VStack(spacing: 0) {
+               ScrollView {
+                   VStack(spacing: iPhoneDimensions.spacing) {
+                       HStack {
+                           Spacer()
+                           
+                           if #available(iOS 15.0, *) {
+                               page.title.toText()
+                                   .font(.largeTitle)
+                                   .fontWeight(.bold)
+                                   .lineSpacing(8)
+                                   .multilineTextAlignment(.center)
+                                   .padding(.top, iPhoneDimensions.topPadding - (isiPad ? 15 : 0))
+                                   .fixedSize(horizontal: false, vertical: true)
+                                   .accessibilityHeading(.h1)
+                           } else {
+                               page.title.toText()
+                                   .font(.largeTitle)
+                                   .fontWeight(.bold)
+                                   .lineSpacing(8)
+                                   .multilineTextAlignment(.center)
+                                   .padding(.top, iPhoneDimensions.topPadding - (isiPad ? 15 : 0))
+                                   .fixedSize(horizontal: false, vertical: true)
+                           }
+                           
+                           Spacer()
+                       }
                     
                     VStack(alignment: .midIcons, spacing: 30) {
                         ForEach(page.rows) { row in
@@ -150,5 +150,27 @@ struct WelcomeSheetPageView: View {
             page.backgroundColor.edgesIgnoringSafeArea(.all)
         )
         .edgesIgnoringSafeArea(.top)
+    }
+}
+
+
+extension NSAttributedString {
+    func toText() -> Text {
+        var result = Text("")
+        self.enumerateAttributes(in: NSRange(location: 0, length: self.length), options: []) { attributes, range, _ in
+            let substring = self.string[Range(range, in: self.string)!]
+            var text = Text(substring)
+            
+            if let font = attributes[.font] as? UIFont {
+                text = text.font(Font(font))
+            }
+            if let foregroundColor = attributes[.foregroundColor] as? UIColor {
+                text = text.foregroundColor(Color(foregroundColor))
+            }
+            // Add more attributes as needed
+            
+            result = result + text
+        }
+        return result
     }
 }
