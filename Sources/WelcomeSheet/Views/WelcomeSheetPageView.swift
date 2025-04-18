@@ -24,7 +24,8 @@ struct WelcomeSheetPageView: View {
                         Image(uiImage: headerImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(maxHeight: 200)
+                            .frame(width: 100, height: 100)
+                            .foregroundColor(page.accentColor ?? Color.accentColor)
                             .padding(.top, iPhoneDimensions.topPadding - (isiPad ? 15 : 0))
                             .padding(.horizontal, 20)
                     }
