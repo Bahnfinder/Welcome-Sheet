@@ -1,6 +1,6 @@
 //
 //  UIWelcomeSheetPage.swift
-//  
+//
 //
 //  Created by Eskil Gjerde Sviggum on 18/01/2023.
 //
@@ -48,7 +48,22 @@ public class UIWelcomeSheetPage: NSObject {
     /// Clousure executed after optional button is tapped.
     public var optionalButtonView: UIView?
     
+    /// Optional image displayed above the title
+    @IBInspectable
+    public var headerImage: UIImage?
+    
     func welcomeSheetPage() -> WelcomeSheetPage {
-        WelcomeSheetPage(title: title, rows: rows.map { $0.welcomeSheetPageRow() }, accentUIColor: accentColor, backgroundUIColor: backgroundColor, mainButtonTitle: mainButtonTitle, optionalButtonTitle: optionalButtonTitle, optionalButtonURL: URL(string: optionalButtonURL ?? ""), optionalButtonAction: optionalButtonAction, optionalButtonUIView: optionalButtonView)
+        WelcomeSheetPage(
+            title: title,
+            rows: rows.map { $0.welcomeSheetPageRow() },
+            accentUIColor: accentColor,
+            backgroundUIColor: backgroundColor,
+            mainButtonTitle: mainButtonTitle,
+            optionalButtonTitle: optionalButtonTitle,
+            optionalButtonURL: URL(string: optionalButtonURL ?? ""),
+            optionalButtonAction: optionalButtonAction,
+            optionalButtonUIView: optionalButtonView,
+            headerImage: headerImage
+        )
     }
 }
